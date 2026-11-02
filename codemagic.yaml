@@ -1,0 +1,75 @@
+workflows:
+  carcarelog-ios:
+    name: CarCare Log iOS App Store Build
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    # This must match the App Store Connect integration name in Codemagic.
+    integrations:
+      app_store_connect: Xenon
+
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.carcarelog.app
+      vars:
+        BUNDLE_ID: "com.carcarelog.app"
+        XCODE_PROJECT: "CarCareLog.xcodeproj"
+        XCODE_SCHEME: "CarCareLog"
+      xcode: latest
+
+    scripts:
+      - name: Check Xcode and project configuration
+        script: |
+          set -e
+          cd "$CM_BUILD_DIR"
+          xcodebuild -version
+          test -f "$XCODE_PROJECT/project.pbxproj"
+          xcodebuild -list -project "$XCODE_PROJECT"
+
+      - name: Set unique App Store build number
+        script: |
+          set -e
+          cd "$CM_BUILD_DIR"
+          : "${BUILD_NUMBER:?Codemagic BUILD_NUMBER is not set}"
+          # Keep CFBundleVersion unique across builds in this Codemagic workflow.
+          sed -i '' -E "s/CURRENT_PROJECT_VERSION = [0-9]+;/CURRENT_PROJECT_VERSION = ${BUILD_NUMBER};/g" "$XCODE_PROJECT/project.pbxproj"
+          grep "CURRENT_PROJECT_VERSION = ${BUILD_NUMBER};" "$XCODE_PROJECT/project.pbxproj"
+
+      - name: Run unit tests on an available iPhone simulator
+        script: |
+          set -e
+          cd "$CM_BUILD_DIR"
+          SIMULATOR_ID="$(xcrun simctl list devices available | awk -F '[()]' '/iPhone/ {print $2; exit}')"
+          if [ -z "$SIMULATOR_ID" ]; then
+            echo "No available iPhone simulator was found on this build machine."
+            exit 1
+          fi
+          echo "Testing on simulator: $SIMULATOR_ID"
+          xcodebuild test \
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Apply App Store provisioning profile
+        script: xcode-project use-profiles
+
+      - name: Build signed IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Upload the IPA to App Store Connect, but do not submit it automatically.
+        submit_to_testflight: false
+        submit_to_app_store: false
