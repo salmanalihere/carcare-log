@@ -1,3 +1,7 @@
+---
+permalink: /terms-of-use.html
+---
+
 # CarCare Log Terms of Use
 
 **Last Updated: November 2, 2026**
