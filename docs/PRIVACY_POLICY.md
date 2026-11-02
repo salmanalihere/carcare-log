@@ -1,3 +1,7 @@
+---
+permalink: /privacy-policy.html
+---
+
 # CarCare Log Privacy Policy
 
 **Last Updated: November 2, 2026**
