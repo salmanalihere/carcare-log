@@ -426,7 +426,10 @@
 		};
 		A00000000000000000000065 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
+			buildSettings = { 
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -441,13 +444,16 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarCareLog.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CarCareLog";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarCareLog.app/CarCareLog";
 			};
 			name = Debug;
 		};
 		A00000000000000000000066 /* Release */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
+			buildSettings = { 
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -462,7 +468,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarCareLog.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CarCareLog";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarCareLog.app/CarCareLog";
 			};
 			name = Release;
 		};
