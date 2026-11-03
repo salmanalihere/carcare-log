@@ -5,8 +5,8 @@ Product IDs must match `StoreManager.productIDs` exactly:
 
 | Product ID | Type | Price target | Notes |
 |---|---|---|---|
-| `com.carcarelog.monthly` | Auto-renewable subscription | $2.99 / month | Subscription group "Pro" |
-| `com.carcarelog.yearly` | Auto-renewable subscription | $19.99 / year | Same group "Pro" |
+| `com.carcarelog.monthly.v2` | Auto-renewable subscription | $2.99 / month | Subscription group "CarCare Log Pro" |
+| `com.carcarelog.yearly` | Auto-renewable subscription | $19.99 / year | Same group "CarCare Log Pro" |
 | `com.carcarelog.lifetime` | Non-consumable | $39.99 | One-time unlock |
 
 Rules the app follows (already implemented):
