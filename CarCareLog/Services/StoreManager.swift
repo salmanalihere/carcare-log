@@ -5,7 +5,7 @@ import StoreKit
 /// `Transaction.currentEntitlements` — never from a local flag.
 @MainActor
 final class StoreManager: ObservableObject {
-    static let monthlyID = "com.carcarelog.monthly"
+    static let monthlyID = "com.carcarelog.monthly.v2"
     static let yearlyID = "com.carcarelog.yearly"
     static let lifetimeID = "com.carcarelog.lifetime"
     static let productIDs = [monthlyID, yearlyID, lifetimeID]
