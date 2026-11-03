@@ -94,7 +94,7 @@ final class CarCareLogTests: XCTestCase {
     // StoreKit configuration surface (IDs are the documented contract)
     func testProductIDs() {
         XCTAssertEqual(Set(StoreManager.productIDs),
-                       ["com.carcarelog.monthly", "com.carcarelog.yearly", "com.carcarelog.lifetime"])
+                       ["com.carcarelog.monthly.v2", "com.carcarelog.yearly", "com.carcarelog.lifetime"])
     }
 
     // Distance conversion (FIX 2): internal base unit is kilometres.
